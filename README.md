@@ -1,11 +1,8 @@
-# Spder House
+# Spider House
 
 ## Install
 
 ## Build
-The code of the spder-house is located in the folder `./lib`. To build 
-spder-house:
-
 - Install dependencies:
 
   ```
