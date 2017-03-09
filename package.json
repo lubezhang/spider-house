@@ -1,0 +1,16 @@
+{
+  "name": "spider-house",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "iconv-lite": "^0.4.15",
+    "log4js": "^1.1.1",
+    "moment": "^2.17.0",
+    "request": "^2.80.0"
+  }
+}
