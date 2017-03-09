@@ -4,13 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "mocha ./test/*.js"
   },
   "dependencies": {
+    "chai": "^3.5.0",
     "cheerio": "^0.22.0",
     "iconv-lite": "^0.4.15",
     "log4js": "^1.1.1",
+    "mocha": "^3.2.0",
     "moment": "^2.17.0",
-    "request": "^2.80.0"
+    "request": "^2.80.0",
+    "rimraf": "^2.6.1"
   }
 }
