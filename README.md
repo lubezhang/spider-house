@@ -1,16 +1,18 @@
 # Spider House
 
-## Install
-
-## Build
+## Usage
 - Install dependencies:
 
   ```
   npm install
   ```
 
-- Build JSON Editor:
+- Startup Service:
 
   ```
   npm start
+  ```
+- Unit Test
+  ```
+  npm test
   ```
