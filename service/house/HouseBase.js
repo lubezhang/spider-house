@@ -1,9 +1,11 @@
 "use strict"
 
-let { Ajax } = require("../utils/Ajax");
-let { FileUtil } = require("../utils/FileUtil")
+let { Ajax } = require("../../utils/Ajax");
+let { FileUtil } = require("../../utils/FileUtil")
+let { AJKSchema, FangSchema, getSchema } = require("../../utils/mongoUtils")
+let { HOUSE_SERVICE_CONFIG } = require("../../config/config")
 
-class House {
+class HouseBase {
     constructor() {
         this.name = "house";
         this.pageUrl = "";
@@ -32,7 +34,7 @@ class House {
     
     start(beginPageNum = 1) {
         
-        this.getLogger().info(`启动抓取数据服务【${this.name}】`, beginPageNum)
+        this.getLogger().info(`启动抓取数据服务【${this.name}】`)
         this.getHouseData(beginPageNum)
     }
 
@@ -40,15 +42,32 @@ class House {
         return `${this.pageUrl}${pageNum}/`
     }
 
-    saveData(data) {
-        let saveData = data;
-        if(typeof data === "object") {
-            saveData = JSON.stringify(data)
+    saveData(data, saveType) {
+        this.getLogger().info(`本次抓取【${data.length}】条数据`)
+
+        if(saveType && saveType === 2) {
+            if(data.length > 0) {
+                let HouseSchema = getSchema(this.name);
+                let house;
+                for(let houseInfo of data) {
+                    house = new HouseSchema(houseInfo);
+                    house.save();
+                }
+
+                // HouseSchema.collection.insert(data, (err, docs) => {
+                //     console.log(err);
+                // }) 
+            }
+        } else {
+            let saveData = data;
+            if(typeof data === "object") {
+                saveData = JSON.stringify(data)
+            }
+            FileUtil.writeJson(this.name, saveData).then(res => {
+                this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
+                this.houseData = [];
+            })
         }
-        FileUtil.writeJson(this.name, saveData).then(res => {
-            this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
-            this.houseData = [];
-        })
     }
 
     getJsonData(pageNum) {
@@ -70,22 +89,22 @@ class House {
         // if(this.workQueue && this.workQueue.length === 0) {
             this.getJsonData(pageNum).then(res => {
                  this.houseData = this.houseData.concat(res);
-                if(pageNum < 1000) {
+                if(pageNum < HOUSE_SERVICE_CONFIG.max_page) {
                     pageNum++;
                     this.getHouseData(pageNum)
                 } else {
                     this.stopPageNum = pageNum
-                    this.saveData(this.houseData);
+                    this.saveData(this.houseData, 2);
                 }
             }).catch(e => {
                 this.getLogger().error(e);
                 this.stopPageNum = pageNum
-                this.saveData(this.houseData);
+                this.saveData(this.houseData, 2);
             })
         // }
     }
 }
 
 module.exports = {
-    House
+    HouseBase
 };

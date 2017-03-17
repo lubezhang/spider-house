@@ -1,7 +1,8 @@
 "use strict"
 
 let schedule = require('node-schedule');
-let logger = require("./utils/logger").logger()
+let logger = require("../utils/logger").logger()
+let { HOUSE_SERVICE_CONFIG } = require("../config/config")
 
 class HouseSchedule {
     constructor(taskList) {
@@ -27,7 +28,7 @@ class HouseSchedule {
         // rule.hour = 11;
 
         // 一小时抓一次数据 
-        rule.minute = 0;
+        rule.minute = HOUSE_SERVICE_CONFIG.schedule_minute;
 
         // rule.second = [0, 20, 40, 59]; // 测试规则
         return rule;

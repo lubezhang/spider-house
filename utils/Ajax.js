@@ -3,7 +3,7 @@ let zlib = require("zlib");
 let request = require("request");
 var iconv = require('iconv-lite');
 
-let logger = require("../utils/logger").logger()
+let logger = require("./logger").logger()
 
 class Ajax {
     static requestPageData(url, isZip, encoding) {

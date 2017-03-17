@@ -1,13 +1,13 @@
 "use strict"
 
 let cheerio = require("cheerio");
-let { House } = require("./House")
-let { Ajax } = require("../utils/Ajax");
-let { getLogger } = require("../utils/logger")
+let { HouseBase } = require("./HouseBase")
+let { Ajax } = require("../../utils/Ajax");
+let { getLogger } = require("../../utils/logger")
 
 const BASE_URL = "http://newhouse.fang.com/house/s/b9";
 
-class Fang extends House {
+class Fang extends HouseBase {
     constructor() {
         super();
         this.name = "Fang";

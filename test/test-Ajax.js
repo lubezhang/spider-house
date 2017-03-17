@@ -1,7 +1,7 @@
 let should = require('chai').should();
 let expect = require('chai').expect
 let cheerio = require("cheerio");
-let { Ajax } = require("../lib/utils/Ajax.js")
+let { Ajax } = require("../../utils/Ajax.js")
 
 describe("Ajax.js", function() {
     it('API is complete', function () {

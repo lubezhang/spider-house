@@ -4,7 +4,7 @@ let fs =  require('fs');
 let path =  require('path');
 let moment =  require("moment");
 let logger = require("./logger").logger()
-let { DATA_PATH } = require("../../config")
+let { DATA_PATH } = require("../config")
 
 const BASE_PATH = __dirname + "/../../";
 

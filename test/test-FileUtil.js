@@ -3,7 +3,7 @@ let expect = require('chai').expect
 let fs = require("fs");
 let rimraf = require("rimraf");
 let { DATA_PATH } = require("../config")
-let { FileUtil } = require("../lib/utils/FileUtil.js")
+let { FileUtil } = require("../utils/FileUtil.js")
 
 const ROOT_PATH = __dirname + "/test-dir1";
 const TEST_PATH = `${ROOT_PATH}/test-dir2/test-dir3`;
