@@ -3,7 +3,7 @@
 let { Ajax } = require("../../utils/Ajax");
 let { FileUtil } = require("../../utils/FileUtil")
 let { AJKSchema, FangSchema, getSchema } = require("../../utils/mongoUtils")
-let { HOUSE_SERVICE_CONFIG } = require("../../config/config")
+let { HOUSE_SERVICE_CONFIG, DATA_SAVE_MODE } = require("../../config/config")
 
 class HouseBase {
     constructor() {
@@ -94,12 +94,12 @@ class HouseBase {
                     this.getHouseData(pageNum)
                 } else {
                     this.stopPageNum = pageNum
-                    this.saveData(this.houseData, 2);
+                    this.saveData(this.houseData, DATA_SAVE_MODE);
                 }
             }).catch(e => {
                 this.getLogger().error(e);
                 this.stopPageNum = pageNum
-                this.saveData(this.houseData, 2);
+                this.saveData(this.houseData, DATA_SAVE_MODE);
             })
         // }
     }

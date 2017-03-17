@@ -37,9 +37,6 @@ class HouseSchedule {
     executeJob() {
         logger.debug('');
         logger.debug('==================== executeJob =======================');
-        // for(let funStart of this.taskList) {
-        //     funStart && "function" === typeof funStart && funStart();
-        // }
         for(let house of this.taskList) {
             if(house && house.start) {
                 house.start();
