@@ -3,10 +3,7 @@
 let fs =  require('fs');
 let path =  require('path');
 let moment =  require("moment");
-let logger = require("./logger").logger()
-let { DATA_PATH } = require("../config")
-
-const BASE_PATH = __dirname + "/../../";
+let { ROOT_PATH } = require("../config/config")
 
 class FileUtil {
     constructor() {
@@ -51,7 +48,7 @@ class FileUtil {
      */
     static writeJson(moduleName, data) {
         return new Promise((resolve, reject) => {
-            let filePath = `${DATA_PATH}/${moduleName}`;
+            let filePath = `${ROOT_PATH}/data/${moduleName}`;
             this.mkdirsSync(filePath);
             this.writeFile(`${filePath}/${moment().format('YYYY-MM-DD_HH:mm:ss')}.json`, data).then(res => {
                 resolve(res);

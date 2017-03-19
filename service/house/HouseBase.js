@@ -1,8 +1,7 @@
 "use strict"
 
-let { Ajax } = require("../../utils/Ajax");
 let { FileUtil } = require("../../utils/FileUtil")
-let { AJKSchema, FangSchema, getSchema } = require("../../utils/mongoUtils")
+let { getSchema } = require("../../utils/mongoUtils")
 let { HOUSE_SERVICE_CONFIG, DATA_SAVE_MODE } = require("../../config/config")
 
 class HouseBase {
@@ -16,7 +15,8 @@ class HouseBase {
         this.stop = false;
     }
 
-    analysis(pageData) {
+    analysis(pageData = []) {
+        console.log(pageData);
         return [];
     }
 
@@ -64,6 +64,7 @@ class HouseBase {
                 saveData = JSON.stringify(data)
             }
             FileUtil.writeJson(this.name, saveData).then(res => {
+                this.getLogger().debug(`生成数据文件【${res}】`)
                 this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
                 this.houseData = [];
             })

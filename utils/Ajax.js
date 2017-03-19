@@ -1,4 +1,4 @@
-let http = require("http");
+// let http = require("http");
 let zlib = require("zlib");
 let request = require("request");
 var iconv = require('iconv-lite');
@@ -46,7 +46,7 @@ class Ajax {
     }
 
     static getPageData(url, encoding) {
-        return this.requestPageData(url, false)
+        return this.requestPageData(url, false, encoding)
     }
 
     static getPageDataUngzip(url, encoding) {
