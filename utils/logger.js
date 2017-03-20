@@ -1,4 +1,5 @@
 let log4js = require('log4js');
+let { LOGGER_LEVEL } = require("../config/config.js")
 // log4js.configure(__dirname+"/../../log4js.json")
 const logConfig = {
     "appenders": [
@@ -7,7 +8,7 @@ const logConfig = {
         }
     ],
     "levels": {
-        "console": "info"
+        "console": LOGGER_LEVEL
     },
     "replaceConsole": false
 }
