@@ -1,7 +1,7 @@
 let should = require('chai').should();
 let expect = require('chai').expect
 let cheerio = require("cheerio");
-let { Ajax } = require("../../utils/Ajax.js")
+let { Ajax } = require("../utils/Ajax.js")
 
 describe("Ajax.js", function() {
     it('API is complete', function () {
@@ -25,11 +25,11 @@ describe("Ajax.js", function() {
         })
     })
 
-    it('getPageDataUngzip', function () {
+    it('getPageDataUngzip', function (done) {
         let url = "https://www.baidu.com/"
         Ajax.getPageDataUngzip(url).then(pageData => {
-            console.log(pageData);
-            // let $ = cheerio.load(pageData);
+            // console.log(pageData);
+            let $ = cheerio.load(pageData);
             // console.log($("#su").val());
             // expect($("#su").val()).to.not.undefined;
             // expect($("#su").val()).to.equal("百度一下")

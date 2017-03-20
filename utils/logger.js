@@ -7,7 +7,7 @@ const logConfig = {
         }
     ],
     "levels": {
-        "console": "debug"
+        "console": "info"
     },
     "replaceConsole": false
 }

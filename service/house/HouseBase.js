@@ -53,10 +53,8 @@ class HouseBase {
                     house = new HouseSchema(houseInfo);
                     house.save();
                 }
-
-                // HouseSchema.collection.insert(data, (err, docs) => {
-                //     console.log(err);
-                // }) 
+                this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
+                this.houseData = [];
             }
         } else {
             let saveData = data;

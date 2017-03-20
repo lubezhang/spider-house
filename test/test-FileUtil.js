@@ -2,23 +2,24 @@ let should = require('chai').should();
 let expect = require('chai').expect
 let fs = require("fs");
 let rimraf = require("rimraf");
-let { DATA_PATH } = require("../config")
+let { ROOT_PATH } = require("../config/config.js")
 let { FileUtil } = require("../utils/FileUtil.js")
 
-const ROOT_PATH = __dirname + "/test-dir1";
-const TEST_PATH = `${ROOT_PATH}/test-dir2/test-dir3`;
+const DATA_PATH = ROOT_PATH = "data/"
+const TEST_ROOT_PATH = __dirname + "/test-dir1";
+const TEST_PATH = `${TEST_ROOT_PATH}/test-dir2/test-dir3`;
 
 describe("FileUtil.js", function() {
 
     before(function() {
-        if(fs.existsSync(ROOT_PATH)) {
-            rimraf.sync(ROOT_PATH);
+        if(fs.existsSync(TEST_ROOT_PATH)) {
+            rimraf.sync(TEST_ROOT_PATH);
         }
     });
 
     after(function() {
-        if(fs.existsSync(ROOT_PATH)) {
-            rimraf.sync(ROOT_PATH);
+        if(fs.existsSync(TEST_ROOT_PATH)) {
+            rimraf.sync(TEST_ROOT_PATH);
         }
     });
  
