@@ -1,16 +1,14 @@
-"use strict"
+const cheerio = require('cheerio');
+const { HouseBase } = require('./HouseBase');
+const { Ajax } = require('../../utils/Ajax');
+const { getLogger } = require('../../utils/logger');
 
-let cheerio = require("cheerio");
-let { HouseBase } = require("./HouseBase")
-let { Ajax } = require("../../utils/Ajax");
-let { getLogger } = require("../../utils/logger")
-
-const BASE_URL = "http://bj.fang.anjuke.com/loupan/all/p";
+const BASE_URL = 'http://bj.fang.anjuke.com/loupan/all/p';
 
 class AJK extends HouseBase {
     constructor() {
         super();
-        this.name = "AJK";
+        this.name = 'AJK';
         this.pageUrl = BASE_URL;
     }
 
@@ -19,29 +17,28 @@ class AJK extends HouseBase {
     }
 
     getLogger() {
-        return getLogger("AJK")
+        return getLogger('AJK');
     }
 
     analysis(pageData) {
-        let ajkData = [];
-        let $ = cheerio.load(pageData, {decodeEntities: false});
-        let houseInfoList = $(".key-list > .item-mod");
-        for(let i = 0, len = houseInfoList.length; i < len; i++) {
+        const ajkData = [];
+        const $ = cheerio.load(pageData, { decodeEntities: false });
+        const houseInfoList = $('.key-list > .item-mod');
+        for (let i = 0, len = houseInfoList.length; i < len; i++) {
             try {
-                let $house = $(houseInfoList[i]);
-                let projectName = $house.find(".lp-name a.items-name").text();
-                let averageSale = $house.find(".favor-pos p.price span").text();
-                let discountSale = "";
-                if(!averageSale) {
-                    discountSale = $house.find(".discount-item p.favor-tag span").text();
+                const $house = $(houseInfoList[i]);
+                const projectName = $house.find('.lp-name a.items-name').text();
+                const averageSale = $house.find('.favor-pos p.price span').text();
+                let discountSale = '';
+                if (!averageSale) {
+                    discountSale = $house.find('.discount-item p.favor-tag span').text();
                 }
 
                 ajkData.push({
-                    projectName: projectName,
+                    projectName,
                     averageSale: averageSale || 0,
-                    discountSale: discountSale || 0
-                })
-
+                    discountSale: discountSale || 0,
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -51,9 +48,6 @@ class AJK extends HouseBase {
 }
 
 module.exports = {
-    AJK
-}
-
-
-
+    AJK,
+};
 

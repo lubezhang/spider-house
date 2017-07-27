@@ -1,16 +1,14 @@
-"use strict"
+const cheerio = require('cheerio');
+const { HouseBase } = require('./HouseBase');
+const { Ajax } = require('../../utils/Ajax');
+const { getLogger } = require('../../utils/logger');
 
-let cheerio = require("cheerio");
-let { HouseBase } = require("./HouseBase")
-let { Ajax } = require("../../utils/Ajax");
-let { getLogger } = require("../../utils/logger")
-
-const BASE_URL = "http://house.focus.cn/search/index_p5.html";
+const BASE_URL = 'http://house.focus.cn/search/index_p5.html';
 
 class Focus extends HouseBase {
     constructor() {
         super();
-        this.name = "Focus";
+        this.name = 'Focus';
         this.pageUrl = BASE_URL;
     }
 
@@ -19,7 +17,7 @@ class Focus extends HouseBase {
     }
 
     getLogger() {
-        return getLogger("AJK")
+        return getLogger('AJK');
     }
 
     getUrl(pageNum) {
@@ -27,26 +25,25 @@ class Focus extends HouseBase {
     }
 
     analysis(pageData) {
-        let ajkData = [];
-        let $ = cheerio.load(pageData, {decodeEntities: false});
-        let houseInfoList = $(".s-lp-list > .lp-list-li");
-        for(let i = 0, len = houseInfoList.length; i < len; i++) {
+        const ajkData = [];
+        const $ = cheerio.load(pageData, { decodeEntities: false });
+        const houseInfoList = $('.s-lp-list > .lp-list-li');
+        for (let i = 0, len = houseInfoList.length; i < len; i++) {
             try {
-                let $house = $(houseInfoList[i]);
+                const $house = $(houseInfoList[i]);
 
-                let projectName = $house.find(".lp-t-title a").text();
-                let averageSale = $house.find(".lp-s-price strong.f-family").text();
-                let discountSale = 0;
+                const projectName = $house.find('.lp-t-title a').text();
+                const averageSale = $house.find('.lp-s-price strong.f-family').text();
+                const discountSale = 0;
                 // if(!averageSale) {
                 //     discountSale = $house.find(".discount-item p.favor-tag span").text();
                 // }
 
                 ajkData.push({
-                    projectName: projectName,
+                    projectName,
                     averageSale: averageSale || 0,
-                    discountSale: discountSale || 0
-                })
-
+                    discountSale: discountSale || 0,
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -56,9 +53,6 @@ class Focus extends HouseBase {
 }
 
 module.exports = {
-    Focus
-}
-
-
-
+    Focus,
+};
 

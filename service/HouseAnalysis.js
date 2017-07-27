@@ -1,4 +1,4 @@
-let { getSchema } = require("../utils/mongoUtils");
+const { getSchema } = require('../utils/mongoUtils');
 
 class HouseAnalysis {
     /**
@@ -11,47 +11,47 @@ class HouseAnalysis {
      * 
      * @memberOf HouseAnalysis
      */
-    static getHouseList(houseSource = "ajk", lpName = "") {
+    static getHouseList(houseSource = 'ajk', lpName = '') {
         return new Promise((resolve, reject) => {
-            let HouseSchema = getSchema(houseSource);
+            const HouseSchema = getSchema(houseSource);
 
-            let groupOpts = [
+            const groupOpts = [
                 {
-                    "$group": {
-                        "_id": "$projectName",
-                        "projectName": {
-                            "$first": "$projectName"    
+                    $group: {
+                        _id: '$projectName',
+                        projectName: {
+                            $first: '$projectName',
                         },
-                        "averageSale": {
-                            "$avg": "$averageSale"
+                        averageSale: {
+                            $avg: '$averageSale',
                         },
-                        "rows": {
-                            "$sum": 1
-                        }
-                    }
-                }
-            ]
+                        rows: {
+                            $sum: 1,
+                        },
+                    },
+                },
+            ];
 
-            if("" !== lpName) {
+            if (lpName !== '') {
                 // groupOpts = Object.assign([], groupOpts, {
                 //     $match : {projectName: lpName}
                 // })
                 groupOpts.push({
-                    $match : {projectName: lpName}
-                })
+                    $match: { projectName: lpName },
+                });
             }
 
             HouseSchema.aggregate(groupOpts).exec((err, msg) => {
-                if(err) {
+                if (err) {
                     reject(err);
                 } else {
                     resolve(msg);
                 }
-            })
-        })
+            });
+        });
     }
 }
 
 module.exports = {
-    HouseAnalysis
-}
+    HouseAnalysis,
+};

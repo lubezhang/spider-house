@@ -1,26 +1,21 @@
-"use strict"
-
-let fs =  require('fs');
-let path =  require('path');
-let moment =  require("moment");
-let { ROOT_PATH } = require("../config/config")
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
+const { ROOT_PATH } = require('../config/config');
 
 class FileUtil {
-    constructor() {
+    // 递归创建目录 同步方法  
+    static mkdirsSync(dirname) {
+        if (fs.existsSync(dirname)) {
+            return true;
+        }
+        if (this.mkdirsSync(path.dirname(dirname))) {
+            fs.mkdirSync(dirname);
+            return true;
+        }
 
+        return false;
     }
-
-    //递归创建目录 同步方法  
-    static mkdirsSync(dirname) {  
-        if (fs.existsSync(dirname)) {  
-            return true;  
-        } else {  
-            if (this.mkdirsSync(path.dirname(dirname))) {  
-                fs.mkdirSync(dirname);
-                return true;  
-            }  
-        }  
-    } 
 
     static writeFile(basePath, data) {
         // logger.debug("生成数据文件：", basePath)
@@ -33,7 +28,7 @@ class FileUtil {
 
                 resolve(basePath);
             });
-        })
+        });
     }
 
     /**
@@ -48,18 +43,18 @@ class FileUtil {
      */
     static writeJson(moduleName, data) {
         return new Promise((resolve, reject) => {
-            let filePath = `${ROOT_PATH}/data/${moduleName}`;
+            const filePath = `${ROOT_PATH}/data/${moduleName}`;
             this.mkdirsSync(filePath);
-            this.writeFile(`${filePath}/${moment().format('YYYY-MM-DD_HH:mm:ss')}.json`, data).then(res => {
+            this.writeFile(`${filePath}/${moment().format('YYYY-MM-DD_HH:mm:ss')}.json`, data).then((res) => {
                 resolve(res);
-            }).catch(e => {
+            }).catch((e) => {
                 /* istanbul ignore next */
                 reject(e);
-            })
-        })
+            });
+        });
     }
 }
 
 module.exports = {
-    FileUtil
-}
+    FileUtil,
+};

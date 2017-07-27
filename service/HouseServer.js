@@ -1,17 +1,15 @@
-"use strict"
+const HouseSchedule = require('./HouseSchedule').HouseSchedule;
 
-let HouseSchedule = require("./HouseSchedule").HouseSchedule;
-
-let AJK = require("./house/AJK").AJK;
-let Fang = require("./house/Fang").Fang;
-let Focus = require("./house/Focus").Focus;
+const AJK = require('./house/AJK').AJK;
+const Fang = require('./house/Fang').Fang;
+const Focus = require('./house/Focus').Focus;
 
 class HouseServer {
     constructor() {
         this.hs = new HouseSchedule([
-            new AJK(), 
+            new AJK(),
             new Fang(),
-            new Focus()
+            new Focus(),
         ]);
     }
 
@@ -25,5 +23,5 @@ class HouseServer {
 }
 
 module.exports = {
-    HouseServer
-}
+    HouseServer,
+};
