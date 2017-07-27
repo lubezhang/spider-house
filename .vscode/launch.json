@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "spder-house",
-            "program": "${workspaceRoot}/index.js"
+            "program": "${workspaceRoot}/dev.js"
         },
         {
             "type": "node",

@@ -2,7 +2,7 @@
 
 let schedule = require('node-schedule');
 let logger = require("../utils/logger").logger()
-let { HOUSE_SERVICE_CONFIG } = require("../config/config")
+let { SERVICE_CONFIG_SCHEDULE_TYPE } = require("../config/config")
 
 class HouseSchedule {
     constructor(taskList) {
@@ -12,7 +12,7 @@ class HouseSchedule {
 
     start() {
         logger.info("定时任务 - 开始");
-        if(0 === HOUSE_SERVICE_CONFIG.schedule_type) {
+        if(0 === SERVICE_CONFIG_SCHEDULE_TYPE) {
             this.executeJob();
         } else {
             this.scheduleJob = schedule.scheduleJob(this.createScheduleRule(), this.executeJob.bind(this));
@@ -35,7 +35,7 @@ class HouseSchedule {
 
         // rule.second = [0, 20, 40, 59]; // 测试规则
 
-        switch (HOUSE_SERVICE_CONFIG.schedule_type) {
+        switch (SERVICE_CONFIG_SCHEDULE_TYPE) {
             case 1:
                 rule.hour = 0;
                 break;

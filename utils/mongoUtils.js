@@ -8,11 +8,15 @@ mongoose.connection.on('error', function(err){
 
 let Schema = mongoose.Schema;
 let HouseSchema = new Schema({
-	projectName: { type: String, required: true, trim: true },
-	averageSale: Number,
-    discountSale: Number,
-    createTime: Date,
-    updateTime: Date
+	projectName: {          // 项目名称 
+        type: String, 
+        required: true, 
+        trim: true 
+    },  
+	averageSale: Number,    // 均价                            
+    discountSale: Number,   // 周边均价
+    createTime: Date,       // 数据采集时间
+    updateTime: Date        // 数据更新时间
 });
 
 HouseSchema.pre('save', function (next) {

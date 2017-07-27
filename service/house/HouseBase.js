@@ -1,22 +1,21 @@
 "use strict"
 
-let { FileUtil } = require("../../utils/FileUtil")
-let { getSchema } = require("../../utils/mongoUtils")
-let { HOUSE_SERVICE_CONFIG, DATA_SAVE_MODE } = require("../../config/config")
+let { FileUtil } = require("../../utils/FileUtil");
+let { getSchema } = require("../../utils/mongoUtils");
+let { DATA_SAVE_MODE, SERVICE_CONFIG_MAX_PAGE } = require("../../config/config");
+let { isEmpty } = require("lodash");
 
 class HouseBase {
     constructor() {
         this.name = "house";
         this.pageUrl = "";
-        this.houseData = [];
         this.stopPageNum = 0;
 
-        this.workQueue = [];
         this.stop = false;
     }
 
-    analysis(pageData = []) {
-        console.log(pageData);
+    analysis(pageData = await  = []) {
+        console.log(pageData = await );
         return [];
     }
 
@@ -33,7 +32,6 @@ class HouseBase {
     }
     
     start(beginPageNum = 1) {
-        
         this.getLogger().info(`启动抓取数据服务【${this.name}】`)
         this.getHouseData(beginPageNum)
     }
@@ -42,8 +40,8 @@ class HouseBase {
         return `${this.pageUrl}${pageNum}/`
     }
 
-    saveData(data, saveType) {
-        this.getLogger().info(`本次抓取【${data.length}】条数据`)
+    saveData(data = [], saveType) {
+        // this.getLogger().info(`本次抓取【${data.length}】条数据`)
 
         if(saveType && saveType === 2) {
             if(data.length > 0) {
@@ -53,8 +51,8 @@ class HouseBase {
                     house = new HouseSchema(houseInfo);
                     house.save();
                 }
-                this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
-                this.houseData = [];
+                // this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
+                // this.houseData = [];
             }
         } else {
             let saveData = data;
@@ -63,44 +61,30 @@ class HouseBase {
             }
             FileUtil.writeJson(this.name, saveData).then(res => {
                 this.getLogger().debug(`生成数据文件【${res}】`)
-                this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
-                this.houseData = [];
+                // this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
+                // this.houseData = [];
             })
         }
     }
 
-    getJsonData(pageNum) {
-        return new Promise((resolve, reject) => {
-            this.getPage(this.getUrl(pageNum)).then(res => {
-                let ajkData = this.analysis(res);
-                if(ajkData.length === 0) {
-                    reject("解析页面失败或已经到达最后一页");
-                } else {
-                    resolve(ajkData);
-                }
-            }).catch(e => {
-                reject(e);
-            })
-        })
+    async getJsonData(pageNum) {
+        let pageData = await this.getPage(this.getUrl(pageNum));
+        return this.analysis(pageData)
     }
 
-    getHouseData(pageNum) {
-        // if(this.workQueue && this.workQueue.length === 0) {
-            this.getJsonData(pageNum).then(res => {
-                 this.houseData = this.houseData.concat(res);
-                if(pageNum < HOUSE_SERVICE_CONFIG.max_page) {
-                    pageNum++;
-                    this.getHouseData(pageNum)
-                } else {
-                    this.stopPageNum = pageNum
-                    this.saveData(this.houseData, DATA_SAVE_MODE);
-                }
-            }).catch(e => {
-                this.getLogger().error(e);
-                this.stopPageNum = pageNum
-                this.saveData(this.houseData, DATA_SAVE_MODE);
-            })
-        // }
+    async getHouseData(pageNum) {
+        let data = [], houseDataList = [];
+        while(!isEmpty(data = await this.getJsonData(pageNum))) {
+            this.saveData(data, );
+            this.stopPageNum = pageNum;
+            pageNum++;
+            
+            // 抓取的数据大于定义的最大页数，跳出循环
+            if(pageNum > SERVICE_CONFIG_MAX_PAGE) {
+                break;
+            }
+        }
+        this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
     }
 }
 
