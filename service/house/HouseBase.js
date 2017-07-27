@@ -14,8 +14,7 @@ class HouseBase {
         this.stop = false;
     }
 
-    analysis(pageData = await  = []) {
-        console.log(pageData = await );
+    analysis(pageData = []) {
         return [];
     }
 
@@ -75,7 +74,7 @@ class HouseBase {
     async getHouseData(pageNum) {
         let data = [], houseDataList = [];
         while(!isEmpty(data = await this.getJsonData(pageNum))) {
-            this.saveData(data, );
+            this.saveData(data, DATA_SAVE_MODE);
             this.stopPageNum = pageNum;
             pageNum++;
             
