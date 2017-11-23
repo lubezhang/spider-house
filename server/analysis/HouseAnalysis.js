@@ -1,4 +1,4 @@
-const { getSchema } = require('../utils/mongoUtils');
+const { getSchema } = require('../../utils/mongoUtils');
 
 class HouseAnalysis {
     /**

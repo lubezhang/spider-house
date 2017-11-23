@@ -532,6 +532,12 @@ eslint-module-utils@^2.1.1:
     debug "^2.6.8"
     pkg-dir "^1.0.0"
 
+eslint-plugin-html@^3.1.1:
+  version "3.1.1"
+  resolved "http://http://npm.tq.360es.cn//eslint-plugin-html/download/eslint-plugin-html-3.1.1.tgz#d6c03796e89ac6b735da6fef9ca9162b423daee3"
+  dependencies:
+    htmlparser2 "^3.8.2"
+
 eslint-plugin-import@^2.7.0:
   version "2.7.0"
   resolved "http://registry.npm.taobao.org/eslint-plugin-import/download/eslint-plugin-import-2.7.0.tgz#21de33380b9efb55f5ef6d2e210ec0e07e7fa69f"
@@ -609,10 +615,6 @@ espree@^3.4.3:
 esprima@2.7.x, esprima@^2.7.1:
   version "2.7.3"
   resolved "http://registry.npm.taobao.org/esprima/download/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
-
-esprima@^3.1.1:
-  version "3.1.3"
-  resolved "http://registry.npm.taobao.org/esprima/download/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
 
 esprima@^4.0.0:
   version "4.0.0"
@@ -732,7 +734,7 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-glob@7.0.5, glob@^7.0.5:
+glob@7.0.5:
   version "7.0.5"
   resolved "http://registry.npm.taobao.org/glob/download/glob-7.0.5.tgz#b4202a69099bbb4d292a7c1b95b6682b67ebdc95"
   dependencies:
@@ -753,7 +755,7 @@ glob@^5.0.15:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.0.3, glob@^7.1.2:
+glob@^7.0.3, glob@^7.0.5, glob@^7.1.2:
   version "7.1.2"
   resolved "http://registry.npm.taobao.org/glob/download/glob-7.1.2.tgz#c19c9df9a028702d678612384a6552404c636d15"
   dependencies:
@@ -853,7 +855,7 @@ hosted-git-info@^2.1.4:
   version "2.5.0"
   resolved "http://registry.npm.taobao.org/hosted-git-info/download/hosted-git-info-2.5.0.tgz#6d60e34b3abbc8313062c3b798ef8d901a07af3c"
 
-htmlparser2@^3.9.1:
+htmlparser2@^3.8.2, htmlparser2@^3.9.1:
   version "3.9.2"
   resolved "https://registry.npmjs.org/htmlparser2/-/htmlparser2-3.9.2.tgz#1bdf87acca0f3f9e53fa4fcceb0f4b4cbb00b338"
   dependencies:
@@ -1011,14 +1013,7 @@ js-tokens@^3.0.0:
   version "3.0.2"
   resolved "http://registry.npm.taobao.org/js-tokens/download/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-yaml@3.x:
-  version "3.8.2"
-  resolved "http://registry.npm.taobao.org/js-yaml/download/js-yaml-3.8.2.tgz#02d3e2c0f6beab20248d412c352203827d786721"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^3.1.1"
-
-js-yaml@^3.8.4:
+js-yaml@3.x, js-yaml@^3.8.4:
   version "3.9.0"
   resolved "http://registry.npm.taobao.org/js-yaml/download/js-yaml-3.9.0.tgz#4ffbbf25c2ac963b8299dc74da7e3740de1c18ce"
   dependencies:
@@ -1244,17 +1239,17 @@ mimic-fn@^1.0.0:
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/mimic-fn/download/mimic-fn-1.1.0.tgz#e667783d92e89dbd342818b5230b9d62a672ad18"
 
-"minimatch@2 || 3", minimatch@^3.0.2, minimatch@^3.0.3:
-  version "3.0.3"
-  resolved "http://registry.npm.taobao.org/minimatch/download/minimatch-3.0.3.tgz#2a4e4090b96b2db06a9d7df01055a62a77c9b774"
-  dependencies:
-    brace-expansion "^1.0.0"
-
-minimatch@^3.0.4:
+"minimatch@2 || 3", minimatch@^3.0.4:
   version "3.0.4"
   resolved "http://registry.npm.taobao.org/minimatch/download/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
     brace-expansion "^1.1.7"
+
+minimatch@^3.0.2, minimatch@^3.0.3:
+  version "3.0.3"
+  resolved "http://registry.npm.taobao.org/minimatch/download/minimatch-3.0.3.tgz#2a4e4090b96b2db06a9d7df01055a62a77c9b774"
+  dependencies:
+    brace-expansion "^1.0.0"
 
 minimist@0.0.8, minimist@~0.0.1:
   version "0.0.8"

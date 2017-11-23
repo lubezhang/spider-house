@@ -1,4 +1,4 @@
-let AJK = require("./service/house/AJK").AJK;
+const AJK = require('./spider/house/AJK').AJK;
 
-let ajk = new AJK();
+const ajk = new AJK();
 ajk.start();

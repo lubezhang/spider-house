@@ -1,6 +1,4 @@
-"use strict"
+const { HouseServer } = require('./spider/HouseServer');
 
-let { HouseServer } = require("./service/HouseServer");
-
-let houseServer = new HouseServer();
+const houseServer = new HouseServer();
 houseServer.start();

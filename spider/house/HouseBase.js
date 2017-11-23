@@ -12,25 +12,14 @@ class HouseBase {
         this.stop = false;
     }
 
-    analysis() {
-        return [];
-    }
-
-    getPage() {
-        return Promise.resolve();
-    }
-
-    getLogger() {
-
-    }
-
     stop() {
         this.stop = false;
     }
 
-    start(beginPageNum = 1) {
+    async start(beginPageNum = 1) {
         this.getLogger().info(`启动抓取数据服务【${this.name}】`);
-        this.getHouseData(beginPageNum);
+        this.stopPageNum = await this.getHouseData(beginPageNum);
+        this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`);
     }
 
     getUrl(pageNum) {
@@ -38,8 +27,6 @@ class HouseBase {
     }
 
     saveData(data = [], saveType) {
-        // this.getLogger().info(`本次抓取【${data.length}】条数据`)
-
         if (saveType && saveType === 2) {
             if (data.length > 0) {
                 const HouseSchema = getSchema(this.name);
@@ -48,8 +35,6 @@ class HouseBase {
                     house = new HouseSchema(houseInfo);
                     house.save();
                 }
-                // this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
-                // this.houseData = [];
             }
         } else {
             let saveData = data;
@@ -58,8 +43,6 @@ class HouseBase {
             }
             FileUtil.writeJson(this.name, saveData).then((res) => {
                 this.getLogger().debug(`生成数据文件【${res}】`);
-                // this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`)
-                // this.houseData = [];
             });
         }
     }
@@ -69,19 +52,22 @@ class HouseBase {
         return this.analysis(pageData);
     }
 
-    async getHouseData(pageNum) {
+    async getHouseData(startPageNum) {
         let data = [];
-        while (!isEmpty(data = await this.getJsonData(pageNum))) {
+        let pageNum = startPageNum;
+
+        do {
+            data = await this.getJsonData(pageNum);
             this.saveData(data, DATA_SAVE_MODE);
-            this.stopPageNum = pageNum;
-            pageNum++;
+            pageNum += 1;
 
             // 抓取的数据大于定义的最大页数，跳出循环
             if (pageNum > SERVICE_CONFIG_MAX_PAGE) {
                 break;
             }
-        }
-        this.getLogger().info(`停止抓取数据服务【${this.name}】，已经抓取【${this.stopPageNum}】页数据`);
+        } while (!isEmpty(data));
+
+        return pageNum;
     }
 }
 
